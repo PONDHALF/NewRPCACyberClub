@@ -59,8 +59,9 @@ Back up both together.
 Ready-made files live in `deploy/`. First-time setup on the server:
 
 ```bash
-# 1. Install Node 20 + build tools (better-sqlite3 needs them) + nginx
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+# 1. Install Node 22 LTS + build tools (better-sqlite3 needs them) + nginx
+#    (Node 20 is too old for current npm tooling — use 22 or newer.)
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt-get install -y nodejs build-essential python3 git nginx
 
 # 2. Clone the repo
