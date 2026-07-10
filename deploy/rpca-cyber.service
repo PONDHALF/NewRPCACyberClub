@@ -1,0 +1,20 @@
+[Unit]
+Description=New-RPCA-Cyber-Club (Next.js CTF site)
+After=network.target
+
+[Service]
+Type=simple
+# Change this to where you cloned the repo on the server:
+WorkingDirectory=/var/www/rpca-cyber
+Environment=NODE_ENV=production
+Environment=PORT=3000
+# Uses the "start" script (next start). Adjust the npm path if different (`which npm`).
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+# The user that owns the repo, data/ and uploads/ (must be able to read+write them):
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target
