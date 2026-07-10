@@ -61,12 +61,12 @@ export default function CreateChallengeForm() {
       </div>
 
       {state.error && (
-        <p className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-400">
+        <p className="animate-pop-in mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-400">
           {state.error}
         </p>
       )}
       {state.ok && (
-        <p className="mt-4 rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 text-sm text-accent">
+        <p className="animate-pop-in mt-4 rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 text-sm text-accent">
           ✓ Challenge added.
         </p>
       )}

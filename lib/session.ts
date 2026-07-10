@@ -17,7 +17,11 @@ export async function createSession(
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    // Secure cookies require HTTPS. Set COOKIE_INSECURE=1 when serving over
+    // plain HTTP (e.g. a bare-IP deployment) so the session cookie still sticks.
+    secure:
+      process.env.NODE_ENV === "production" &&
+      process.env.COOKIE_INSECURE !== "1",
     sameSite: "lax",
     path: "/",
     maxAge: MAX_AGE,

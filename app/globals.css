@@ -66,14 +66,52 @@ body {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: #06231a;
   font-weight: 600;
-  transition: filter 0.2s ease, opacity 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.08s ease;
 }
 .btn-primary:hover {
   filter: brightness(1.08);
 }
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.96);
+}
 .btn-primary:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+/* Press feedback for any button */
+.btn-press {
+  transition: transform 0.08s ease;
+}
+.btn-press:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+/* ---- Popup / modal + toast animations ---- */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.9) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.18s ease-out both;
+}
+.animate-pop-in {
+  animation: pop-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.animate-toast-in {
+  animation: toast-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 /* Inputs */
