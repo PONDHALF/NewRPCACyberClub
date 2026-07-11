@@ -9,6 +9,7 @@ export type Challenge = {
   file_name: string;
   stored_name: string;
   file_size: number | null;
+  hint: string | null;
   created_at: string;
 };
 
@@ -36,13 +37,14 @@ export function getChallenge(id: number): Challenge | undefined {
 export async function createChallenge(
   name: string,
   file: File,
+  hint: string | null = null,
 ): Promise<Challenge> {
   // Insert first to obtain the id, then use it to build a collision-free path.
   const info = db
     .prepare(
-      "INSERT INTO challenges (name, file_name, stored_name, file_size) VALUES (?, ?, ?, ?)",
+      "INSERT INTO challenges (name, file_name, stored_name, file_size, hint) VALUES (?, ?, ?, ?, ?)",
     )
-    .run(name, file.name, "", file.size);
+    .run(name, file.name, "", file.size, hint);
   const id = Number(info.lastInsertRowid);
 
   const storedName = `${id}__${sanitizeFileName(file.name)}`;
@@ -56,8 +58,16 @@ export async function createChallenge(
   return getChallenge(id)!;
 }
 
-export function renameChallenge(id: number, name: string): void {
-  db.prepare("UPDATE challenges SET name = ? WHERE id = ?").run(name, id);
+export function updateChallenge(
+  id: number,
+  name: string,
+  hint: string | null,
+): void {
+  db.prepare("UPDATE challenges SET name = ?, hint = ? WHERE id = ?").run(
+    name,
+    hint,
+    id,
+  );
 }
 
 export async function deleteChallenge(id: number): Promise<void> {

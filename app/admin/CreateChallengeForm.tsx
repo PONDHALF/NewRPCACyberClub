@@ -60,6 +60,22 @@ export default function CreateChallengeForm() {
         </div>
       </div>
 
+      <div className="mt-4 flex flex-col gap-1.5">
+        <label
+          htmlFor="hint"
+          className="font-mono text-xs uppercase tracking-wider text-muted"
+        >
+          Hint <span className="normal-case text-muted/60">(optional)</span>
+        </label>
+        <textarea
+          id="hint"
+          name="hint"
+          rows={2}
+          placeholder="e.g. The key is smaller than you think…"
+          className="field resize-y rounded-lg px-3 py-2.5"
+        />
+      </div>
+
       {state.error && (
         <p className="animate-pop-in mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-400">
           {state.error}

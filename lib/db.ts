@@ -24,9 +24,20 @@ CREATE TABLE IF NOT EXISTS challenges (
   file_name   TEXT NOT NULL,
   stored_name TEXT NOT NULL,
   file_size   INTEGER,
+  hint        TEXT,
   created_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );
 `;
+
+/** Add columns that may be missing on databases created by an older version. */
+function migrate(database: Database.Database): void {
+  const columns = database
+    .prepare("PRAGMA table_info(challenges)")
+    .all() as { name: string }[];
+  if (!columns.some((c) => c.name === "hint")) {
+    database.exec("ALTER TABLE challenges ADD COLUMN hint TEXT");
+  }
+}
 
 function init(): Database.Database {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -34,6 +45,7 @@ function init(): Database.Database {
   const database = new Database(DB_PATH);
   database.pragma("journal_mode = WAL");
   database.exec(SCHEMA);
+  migrate(database);
   return database;
 }
 

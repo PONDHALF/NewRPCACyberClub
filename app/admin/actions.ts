@@ -5,7 +5,7 @@ import { requireAdmin } from "@/lib/auth";
 import {
   createChallenge,
   deleteChallenge,
-  renameChallenge,
+  updateChallenge,
 } from "@/lib/challenges";
 
 const MAX_FILE_BYTES = 50 * 1024 * 1024; // 50 MB
@@ -19,6 +19,7 @@ export async function createChallengeAction(
   await requireAdmin();
 
   const name = String(formData.get("name") ?? "").trim();
+  const hint = String(formData.get("hint") ?? "").trim() || null;
   const file = formData.get("file");
 
   if (!name) {
@@ -31,7 +32,7 @@ export async function createChallengeAction(
     return { error: "File is too large (max 50 MB)." };
   }
 
-  await createChallenge(name, file);
+  await createChallenge(name, file, hint);
   revalidatePath("/admin");
   revalidatePath("/");
   return { ok: true };
@@ -42,9 +43,10 @@ export async function renameChallengeAction(formData: FormData): Promise<void> {
 
   const id = Number(formData.get("id"));
   const name = String(formData.get("name") ?? "").trim();
+  const hint = String(formData.get("hint") ?? "").trim() || null;
   if (!Number.isInteger(id) || !name) return;
 
-  renameChallenge(id, name);
+  updateChallenge(id, name, hint);
   revalidatePath("/admin");
   revalidatePath("/");
 }

@@ -63,35 +63,43 @@ export default async function AdminPage() {
             {challenges.map((c, i) => (
               <li
                 key={c.id}
-                className="card flex flex-col gap-3 rounded-xl p-4 sm:flex-row sm:items-center"
+                className="card flex items-start gap-3 rounded-xl p-4"
               >
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-border bg-surface-2 font-mono text-xs text-accent">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-border bg-surface-2 font-mono text-xs text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
                 <form
                   action={renameChallengeAction}
-                  className="flex flex-1 items-center gap-2"
+                  className="flex min-w-0 flex-1 flex-col gap-2"
                 >
                   <input type="hidden" name="id" value={c.id} />
                   <input
                     name="name"
                     defaultValue={c.name}
                     aria-label="Challenge name"
-                    className="field min-w-0 flex-1 rounded-lg px-3 py-2"
+                    className="field w-full rounded-lg px-3 py-2 font-medium"
+                  />
+                  <textarea
+                    name="hint"
+                    defaultValue={c.hint ?? ""}
+                    rows={2}
+                    aria-label="Hint"
+                    placeholder="Hint (optional) — shown to players"
+                    className="field w-full resize-y rounded-lg px-3 py-2 text-sm"
                   />
                   <button
                     type="submit"
-                    className="shrink-0 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                    className="btn-press self-start rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:text-accent"
                   >
                     Save
                   </button>
                 </form>
 
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 flex-col items-end gap-2">
                   <a
                     href={`/download/${c.id}`}
-                    className="max-w-[10rem] truncate rounded-lg border border-border px-3 py-2 font-mono text-xs text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                    className="max-w-[8rem] truncate rounded-lg border border-border px-3 py-2 font-mono text-xs text-muted transition-colors hover:border-accent/50 hover:text-accent sm:max-w-[10rem]"
                     title={c.file_name}
                   >
                     {c.file_name}
