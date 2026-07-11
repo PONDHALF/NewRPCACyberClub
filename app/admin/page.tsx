@@ -32,7 +32,7 @@ export default async function AdminPage() {
           <form action={logout}>
             <button
               type="submit"
-              className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-muted transition-colors hover:border-red-500/50 hover:text-red-400"
+              className="btn-secondary btn-secondary-warn btn-press rounded-lg px-4 py-2 text-sm"
             >
               Log out
             </button>
@@ -90,7 +90,7 @@ export default async function AdminPage() {
                   />
                   <button
                     type="submit"
-                    className="btn-press self-start rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                    className="btn-secondary btn-press self-start rounded-lg px-3 py-1.5 text-sm"
                   >
                     Save
                   </button>
@@ -99,7 +99,7 @@ export default async function AdminPage() {
                 <div className="flex shrink-0 flex-col items-end gap-2">
                   <a
                     href={`/download/${c.id}`}
-                    className="max-w-[8rem] truncate rounded-lg border border-border px-3 py-2 font-mono text-xs text-muted transition-colors hover:border-accent/50 hover:text-accent sm:max-w-[10rem]"
+                    className="btn-secondary btn-press max-w-[8rem] truncate rounded-lg px-3 py-2 font-mono text-xs sm:max-w-[10rem]"
                     title={c.file_name}
                   >
                     {c.file_name}

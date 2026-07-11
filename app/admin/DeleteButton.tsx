@@ -11,7 +11,7 @@ function ConfirmButton() {
     <button
       type="submit"
       disabled={pending}
-      className="btn-press rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 disabled:opacity-60"
+      className="btn-danger btn-press rounded-lg px-4 py-2 text-sm"
     >
       {pending ? "Deleting…" : "Delete"}
     </button>
@@ -33,7 +33,7 @@ export default function DeleteButton({
         type="button"
         onClick={() => setOpen(true)}
         aria-label={`Delete ${name}`}
-        className="btn-press grid h-9 w-9 place-items-center rounded-lg border border-border text-muted transition-colors hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
+        className="btn-icon btn-icon-danger btn-press h-9 w-9 rounded-lg"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ export default function DeleteButton({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="btn-press rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground"
+                className="btn-secondary btn-press rounded-lg px-4 py-2 text-sm"
               >
                 Cancel
               </button>

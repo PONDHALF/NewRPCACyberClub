@@ -1,19 +1,8 @@
 import Link from "next/link";
 import { listChallenges } from "@/lib/challenges";
+import ChallengeCard from "./ChallengeCard";
 
 export const dynamic = "force-dynamic";
-
-function formatSize(bytes: number | null): string {
-  if (bytes == null) return "";
-  const units = ["B", "KB", "MB", "GB"];
-  let value = bytes;
-  let unit = 0;
-  while (value >= 1024 && unit < units.length - 1) {
-    value /= 1024;
-    unit++;
-  }
-  return `${value.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
-}
 
 export default function Home() {
   const challenges = listChallenges();
@@ -33,7 +22,7 @@ export default function Home() {
           </div>
           <Link
             href="/admin"
-            className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:text-foreground"
+            className="btn-secondary btn-press rounded-lg px-4 py-2 text-sm"
           >
             Admin
           </Link>
@@ -73,65 +62,7 @@ export default function Home() {
         ) : (
           <ul className="flex flex-col gap-3">
             {challenges.map((c, i) => (
-              <li key={c.id}>
-                <a
-                  href={`/download/${c.id}`}
-                  className="card card-hover group flex items-center gap-4 rounded-xl px-5 py-4"
-                >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-border bg-surface-2 font-mono text-sm text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-semibold text-foreground">
-                      {c.name}
-                    </p>
-                    <p className="mt-0.5 flex items-center gap-2 font-mono text-xs text-muted">
-                      <span className="truncate">{c.file_name}</span>
-                      {c.file_size != null && (
-                        <span className="shrink-0 rounded bg-surface-2 px-1.5 py-0.5">
-                          {formatSize(c.file_size)}
-                        </span>
-                      )}
-                    </p>
-                    {c.hint && (
-                      <p className="mt-2 flex items-start gap-1.5 text-xs text-accent/90">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="mt-0.5 h-3.5 w-3.5 shrink-0"
-                        >
-                          <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
-                          <path d="M9 18h6" />
-                          <path d="M10 22h4" />
-                        </svg>
-                        <span className="whitespace-pre-line">{c.hint}</span>
-                      </p>
-                    )}
-                  </div>
-                  <span className="flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted transition-colors group-hover:border-accent/50 group-hover:text-accent">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" x2="12" y1="15" y2="3" />
-                    </svg>
-                    Download
-                  </span>
-                </a>
-              </li>
+              <ChallengeCard key={c.id} challenge={c} index={i} />
             ))}
           </ul>
         )}
