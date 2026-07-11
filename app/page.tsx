@@ -32,7 +32,7 @@ export default function Home() {
             </span>
           </div>
           <Link
-            href="/login"
+            href="/admin"
             className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:text-foreground"
           >
             Admin

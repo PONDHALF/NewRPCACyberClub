@@ -7,15 +7,24 @@ import { SESSION_COOKIE, verifyToken } from "@/lib/session-token";
 export async function proxy(request: NextRequest) {
   const token = request.cookies.get(SESSION_COOKIE)?.value;
   const session = token ? await verifyToken(token) : null;
+  const { pathname } = request.nextUrl;
 
+  // On the login page: if already signed in (not logged out), go to /admin.
+  if (pathname === "/login") {
+    if (session) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    return NextResponse.next();
+  }
+
+  // Everything else matched here is /admin(/*): require a valid session.
   if (!session) {
-    const loginUrl = new URL("/login", request.url);
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*", "/login"],
 };

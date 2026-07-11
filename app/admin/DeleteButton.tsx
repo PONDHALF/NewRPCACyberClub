@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useFormStatus } from "react-dom";
 import { deleteChallengeAction } from "./actions";
 
@@ -51,11 +52,12 @@ export default function DeleteButton({
         </svg>
       </button>
 
-      {open && (
-        <div
-          className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
-        >
+      {open &&
+        createPortal(
+          <div
+            className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          >
           <div
             className="animate-pop-in card w-full max-w-sm rounded-2xl p-6 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
@@ -98,8 +100,9 @@ export default function DeleteButton({
               </form>
             </div>
           </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
